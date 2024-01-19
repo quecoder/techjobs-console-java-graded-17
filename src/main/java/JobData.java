@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -70,16 +69,15 @@ public class JobData {
         loadData();
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        String lowerCaseValue = value.toLowerCase();
 
         for (HashMap<String, String> row : allJobs) {
+            String aValue = row.get(column).toLowerCase(); //change column to lowercase
 
-            String aValue = row.get(column);
-
-            if (aValue.contains(value)) {
+            if (aValue.contains(lowerCaseValue)) {
                 jobs.add(row);
             }
         }
-
         return jobs;
     }
 
@@ -95,7 +93,19 @@ public class JobData {
         loadData();
 
         // TODO - implement this method
-        return null;
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        String lowerCaseValue = value.toLowerCase();
+
+        for (HashMap<String,String> row : allJobs) {
+            for (String key : row.keySet()) {
+                String rowValue = row.get(key).toLowerCase();
+                if (rowValue.contains(lowerCaseValue)) {
+                    jobs.add(row);
+                    break;
+                }
+            }
+        }
+        return jobs;
     }
 
     /**
